@@ -21,6 +21,8 @@ name: Deploy Python project to Azure Function App
 on:
   push:
     branches: ["master"]
+    paths: 'Function/**'
+    
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'rcc-function-app'   # set this to your function app name on Azure
