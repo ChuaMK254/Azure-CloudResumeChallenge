@@ -21,7 +21,8 @@ name: Deploy Python project to Azure Function App
 on:
   push:
     branches: ["master"]
-    paths: 'Function/**'
+    paths:
+      - 'Function/**'
     
 
 env:
