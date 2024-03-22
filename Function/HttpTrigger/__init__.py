@@ -1,14 +1,12 @@
 import logging
 import os
 import azure.functions as func
+import json
 #Table SDK for updating entity
 from azure.data.tables import TableClient
 from azure.data.tables import UpdateMode
 from azure.data.tables import TableServiceClient
 from azure.core.exceptions import ResourceNotFoundError
-
-import json
-
 
 connection_string = os.getenv("AzureWebJobsStorage")
 
@@ -48,6 +46,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         data = {"count": ent["count"]}
 
+        # Set JSON for response
         json_response = json.dumps(data)
 
         return func.HttpResponse(json_response, mimetype="application/json")
