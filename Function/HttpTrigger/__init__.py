@@ -9,7 +9,6 @@ from azure.core.exceptions import ResourceNotFoundError
 
 import json
 
-# Testing
 
 connection_string = os.getenv("AzureWebJobsStorage")
 
