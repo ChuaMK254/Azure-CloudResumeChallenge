@@ -20,11 +20,62 @@ header h1, header p, footer p {
 
 section {
     padding: 20px;
-    margin: 20px 0;
+    margin: auto;
+    width: 70%;
 }
 
-h2 {
-    color: #005A9C;
+.resume-section h2 {
+    border-bottom: 2px solid #005A9C; /* Adjust the color to match the design */
+    color: #333;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.resume-entry {
+    margin-bottom: 20px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline; /* Aligns the title and date on their baseline */
+}
+
+h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.25em; /* Adjust size as needed */
+}
+
+.entry-date {
+    margin: 0;
+    font-size: 0.95em; /* Adjust size as needed */
+    color: #666; /* Grey color for the date */
+    white-space: nowrap; /* Keeps the date on one line */
+}
+
+.resume-entry p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* If your description paragraphs are exactly two, you could target them directly */
+.resume-entry p:first-of-type {
+    font-weight: bold;
+}
+
+/* Adjusting the first paragraph (degree/title) margin */
+.resume-entry p:first-of-type {
+    margin-bottom: 0;
+}
+
+/* Adjusting the second paragraph (description) margin */
+.resume-entry p:last-of-type {
+    margin-top: 0;
+}
+
+.list {
+    margin-top: 10px;
 }
 
 .page-views {
@@ -33,3 +84,7 @@ h2 {
     left: 10px; /* Adjust as needed */
     font-size: 0.9em;
 }
+
+
+
+
