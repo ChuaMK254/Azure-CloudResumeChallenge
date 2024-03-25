@@ -45,3 +45,9 @@ variable "cdn_endpoint_name" {
   type = string
   default = "mk-rcc-cdn-endpoint"
 }
+
+variable "key_vault_name" {
+  description = "Name of CDN endpoint"
+  type = string
+  default = "rcc-key-vault"
+}

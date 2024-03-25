@@ -8,7 +8,7 @@ from azure.data.tables import UpdateMode
 from azure.data.tables import TableServiceClient
 from azure.core.exceptions import ResourceNotFoundError
 
-connection_string = os.getenv("AzureWebJobsStorage")
+connection_string = os.getenv("CosmosDbString")
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')

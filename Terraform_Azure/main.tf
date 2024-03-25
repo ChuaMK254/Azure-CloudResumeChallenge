@@ -70,6 +70,45 @@ resource "azurerm_service_plan" "sp" {
   sku_name            = "Y1"
 }
 
+data "azurerm_client_config" "current" {
+}
+
+resource "azurerm_key_vault" "kv" {
+  name                        = var.key_vault_name
+  location                    = var.location
+  resource_group_name         = var.resource_group_name
+  enabled_for_disk_encryption = false
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  soft_delete_retention_days  = 90
+  purge_protection_enabled    = false
+  enable_rbac_authorization   = true
+
+  sku_name = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "Get",
+    ]
+
+    secret_permissions = [
+      "Get",
+    ]
+
+    storage_permissions = [
+      "Get",
+    ]
+  }
+}
+
+# Secret in keyvault to get cosmosdb connection string
+data "azurerm_key_vault_secret" "cs" {
+  name         = "cosmos-db-connection-string"
+  key_vault_id = resource.azurerm_key_vault.kv.id
+}
+
 resource "azurerm_linux_function_app" "fa" {
   name                = var.function_app_name
   resource_group_name = var.resource_group_name
@@ -97,6 +136,10 @@ resource "azurerm_linux_function_app" "fa" {
       ]
       support_credentials = "false"
     }
+  }
+
+  app_settings = {
+    "CosmosDbString" = data.azurerm_key_vault_secret.cs.value
   }
 
   timeouts {}
@@ -130,3 +173,4 @@ resource "azurerm_cdn_endpoint" "ep" {
     host_name = "rccstorage1.z23.web.core.windows.net"
   }
 }
+
