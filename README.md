@@ -82,12 +82,12 @@ Shifting the focus to Table storage bindings from this [documentation](https://l
 After deciding to use the Azure Tables SDK, I removed both the input and output bindings from my code. **One thing to take note of** is the use of the connection string. By default, the "AzureWebJobsStorage" connection string is to access the Tables in the **storage account**. What I wanted was to access the Tables in the **Cosmos DB**. When testing locally, the connection string can be easily changed/added in the local.settings.json. In my case, I added a "CosmosDbString" with Cosmos DB primary connection string, and called the "CosmosDbString" as an environment variable. However, there is another issue which I will share more in the Infrastructure as Code section below.
 
 
-## Javascript
+### Javascript
 
 This section was supposed to be done before the database section, but I decided to do it after my Function App so I could test both together. In the HTML file, I added a reference to the javascript file which will call the API and update the page counter. When testing locally, I used the link provided by the "func start" command in my javascript file. After deploying the function app, remember to get the link and update the javascript file before updating/uploading the files to the web container in the storage account. During my tests, I realised that the API was working properly when being called by Postman, but it did not work both locally and on Azure. This is due to the CORS setting. 
 
 
-## Infrastructure as Code
+### Infrastructure as Code
 
 Although the challenge stated to use Azure Resource Manager (ARM), I decided to use Terraform instead. Since I did not have any prior experience, I only knew what Terraform does but I did not know how to use it. To understand the basics, I followed this [tutorial](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli) and tested it out on a new resource group.
 
@@ -106,22 +106,22 @@ This is where I faced another challenge. Remember there was an issue with the co
 To solve this, I can specify the connection string in the Terraform variables file, but that means I won't be able to publish it on GitHub. Instead, I made use of Azure Key Vault to store my connection string.
 
 
-## Keyvault
+### Keyvault
 
 By making use of Azure key vault, I can safely store my connection string and reference them in Terraform without displaying it in plaintext. After creating a keyvault, I need to give myself the "Key Vault Administrator" role in Access Control (IAM) to add my connection string in "Secrets". After adding the connection string, I imported Azure key vault resources and data into my Terraform.
 
 
-## Source Control
+### Source Control
 
 At this point, everything was working normally as expected. In normal practices, I would have created a GitHub repository before starting any development work but I decided to follow the challenge step by step. Instead of creating two separate repositories for frontend and backend, I created one and put my codes in their respective folders with their .gitignore files so that it is easier to maintain.
 
 
-## CI/CD
+### CI/CD
 
 Setting up GitHub actions was quite simple with the template given (GitHub repo -> Actions -> New workflow -> Configure). I created two workflows, one for my Azure function app, and the other for my static webpage in the storage account. One small change I made was to run the workflow depending on which folder was updated. For workflow authentication with Azure, I added the credentials to GitHub secrets (Settings -> Secret and variables -> Actions). To test it out, I modified the HTML template to my resume and pushed it to the repository. Sure enough, the changes were automatically deployed and updated.
 
 
-## Conclusion/Reflection
+### Conclusion/Reflection
 
 This project was a success and it took me around 2 weeks to complete it during my spare time. The only part I skipped out was writing some tests for my Python code. I may try it out when I have more free time in the future. At the start of the project, I had a constant worry about whether I was doing the right thing and afraid of making mistakes. In the end, I decided to try whatever I wanted as failures will only become learning opportunities and I could easily restart the project as needed. Overall, I had a lot of fun doing this and hopefully, this will be the start of my cloud journey and career. To check out my website, here is the link [www.cmkand.me](https://www.cmkand.me/).
 
